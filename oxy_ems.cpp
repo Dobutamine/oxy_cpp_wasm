@@ -49,6 +49,7 @@ O2Result calculateO2Parameters(double pH,
                                 double dpg,
                                 double TO2,
                                 double Hb,
+                                double prev_PO2 = -1.0,
                                 double P50_0 = 26.8,
                                 double tol = 1e-8,
                                 int max_iter = 50) {
@@ -72,7 +73,13 @@ O2Result calculateO2Parameters(double pH,
     double P50 = std::pow(10.0, log10_p50);
     double P50_n = std::pow(P50, n);
 
-    // Initial PO2 guess
+    // Initial PO2 guess is the P50
+    
+    double po2 = P50;
+    // if the previous PO2 is not zero then use it as an educated guess
+    if (prev_PO2 > 0.0) {
+        po2 = prev_PO2;
+    } 
     double po2 = P50;
     double sat = 0.0;
 

@@ -30,6 +30,7 @@ O2Result calculateO2Parameters(double pH,
                                 double dpg,
                                 double TO2,
                                 double Hb,
+                                double prev_PO2 = -1.0,
                                 double P50_0 = 26.8,
                                 double tol = 1e-8,
                                 int max_iter = 50) {
@@ -55,6 +56,10 @@ O2Result calculateO2Parameters(double pH,
 
     // Initial PO2 guess
     double po2 = P50;
+    // if the previous PO2 is not zero then use it as an educated guess
+    if (prev_PO2 > 0.0) {
+        po2 = prev_PO2;
+    } 
     double sat = 0.0;
 
     int counter = 0;
