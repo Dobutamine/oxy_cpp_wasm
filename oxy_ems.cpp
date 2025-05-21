@@ -1,6 +1,23 @@
+/*
+
+Compile to WASM with Emscripten for use in web applications using:
+
+emcc oxy_ems.cpp -o oxy.js -O3 -s ENVIRONMENT="web,worker" --std=c++17  --bind 
+
+-o specifies the outfile name. The extension .js is important. Emscripten generates a javascript glue file and a wasm file.
+-O3 = maximal optimization (O0-O3, Oz = minimal size, Os=optimized and minimal size)
+-s ENVIRONMENT="web,worker” is also optional as the default is ENVIRONMENT = "web,webview,worker,node”. It omits code for web view and node environments and makes the glue code size smaller.
+—std=c++17 tells the c++ version
+—bind is important as it provides code for the bindings of c++ datatypes with javascript datatypes
+-s WASM=1 -s MODULARIZE=1 -s EXPORT_ES6=1  are optional as the default for all s options = 1
+
+*/
+
 #include <cmath>
 #include <iostream>
 #include <stdexcept>
+
+// include emscripten dependencies
 #include <emscripten.h>
 #include <emscripten/bind.h>
 
